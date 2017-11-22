@@ -1,0 +1,50 @@
+.complex_form{
+    width: 500px;
+    height: 100%;
+    margin-top:60px;
+    margin-bottom:20px;
+    border-radius: 10px;
+    border: 2px #3C3D3F solid;
+    padding:20px 10px 10px 10px;
+    display:flex;
+    flex-direction: column;
+
+}
+
+.complex_form .form_title{
+    font-size:20px;
+    font-weight:bold;
+    margin:-20px -10px 20px -10px;
+    padding:10px 0px 10px 25px;
+    color:black;
+    background-color: #3C3D3F;
+    border-radius: 7px 7px 0px 0px;
+    text-align: center;
+}
+
+#form_comment_content{
+  padding : 5px 10px 160px 10px;
+}
+
+.complex_form input{
+     margin-bottom:10px;
+     font-size: 20px;
+     border-radius:10px;
+     padding:5px 10px 5px 10px;
+     width : 97%;
+}
+
+.complex_form .btn{
+    border-radius:10px;
+    text-align:center;
+    font-size: 20px;
+    color: #3C3D3F;
+    background: #ffffff;
+    border: 2px #3C3D3F solid;
+    padding: 10px 20px 10px 20px;
+}
+
+.complex_form .btn:hover {
+  background: #3C3D3F;
+  color: #ffffff;
+}

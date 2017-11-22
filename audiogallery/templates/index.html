@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = "guardapp">
+<head>
+    <meta charset="UTF-8">
+    <title> CoastGuard App </title>
+
+    <!-- css -->
+    <link href="/static/style/form.css" rel="stylesheet" type="text/css"/>
+    <!-- angular -->
+    <script src="/static/node_modules/angular/angular.js"></script>
+    <!-- service -->
+    <script src="/static/service/audioService.js"></script>
+
+</head>
+<body>
+<div ng-controller="adminController as adctrl">
+
+    <!-- #################### ONE FILE ##################################### -->
+    <form class="complex_form" title="submit a file" >
+        <div class="form_title">Add a file</div>
+        <input type="file"  name="pic" accept="audio/*" ng-files = "getTheFiles($files)">
+        <input type="submit" ng-click ="uploadFiles()" value="Upload" />
+    </form>
+
+    <!-- #################### MULTIPLE FILES ################################ -->
+
+    <form class="complex_form" title="submit a folder" action=>
+        <div class="form_title">Add multiple files</div>
+        <input type="file"  name="datafile" size="40"  multiple>
+        <input type="submit">
+    </form>
+
+</div>
+</body>
+</html>
