@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app = "guardapp">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title> CoastGuard App </title>
@@ -7,20 +7,25 @@
     <!-- css -->
     <link href="/static/style/form.css" rel="stylesheet" type="text/css"/>
     <!-- angular -->
-    <script src="/static/node_modules/angular/angular.js"></script>
+{#    <script src="/static/node_modules/angular/angular.js"></script>#}
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <!-- service -->
     <script src="/static/service/audioService.js"></script>
 
+    <script src="/static/controller/adminController.js"></script>
+
 </head>
-<body>
+<body  ng-app="guardapp">
 <div ng-controller="adminController as adctrl">
 
+    <button ng-click="adctrl.print()">HELLO</button>
     <!-- #################### ONE FILE ##################################### -->
-    <form class="complex_form" title="submit a file" >
+    <form class="complex_form" title="submit a file" ng-submit="adctrl.uploadFiles()">
         <div class="form_title">Add a file</div>
         <input type="file"  name="pic" accept="audio/*" ng-files = "getTheFiles($files)">
-        <input type="submit" ng-click ="uploadFiles()" value="Upload" />
+        <input type="submit"  value="Upload" />
     </form>
+{#    ng-click ="adctrl.uploadFiles()"#}
 
     <!-- #################### MULTIPLE FILES ################################ -->
 
