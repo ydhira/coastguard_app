@@ -19,7 +19,7 @@
 <div ng-controller="adminController as adctrl">
 
     <button ng-click="adctrl.print()">HELLO</button>
-    <!-- #################### ONE FILE ##################################### -->
+    <!-- #################### ONE FILE ONLY UPLOAD ##################################### -->
     <form class="complex_form" title="submit a file" ng-submit="adctrl.uploadFiles()">
         <div class="form_title">Add a file</div>
         <input type="file"  name="pic" accept="audio/*" ng-files = "getTheFiles($files)">
@@ -27,13 +27,21 @@
     </form>
 {#    ng-click ="adctrl.uploadFiles()"#}
 
-    <!-- #################### MULTIPLE FILES ################################ -->
+    <!-- #################### MULTIPLE FILES ONLY UPLOAD ################################ -->
 
     <form class="complex_form" title="submit a folder" action=>
         <div class="form_title">Add multiple files</div>
         <input type="file"  name="datafile" size="40"  multiple>
         <input type="submit">
     </form>
+
+    <!-- #################### ONE FILE ONLY UPLOAD + QUERY ##################################### -->
+    <form class="complex_form" title="submit a file" ng-submit="adctrl.uploadFile_Query()">
+        <div class="form_title">Submit a file to find others from same speaker.</div>
+        <input type="file"  name="pic" accept="audio/*" ng-files = "getTheFiles($files)">
+        <input type="submit"  value="Upload" />
+    </form>
+
 
 </div>
 </body>

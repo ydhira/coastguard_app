@@ -25,12 +25,18 @@ def fileupload(request):
     print request.FILES['audio_file'].size
     if request.FILES:
         i = MyAudioFile(audio_file=request.FILES['audio_file'])
-        print vars(MyAudioFile.audio_file.field)
         i.save()
+    all_entries = MyAudioFile.objects.all()
 
-    
+    print all_entries[1].audio_file.size
     return HttpResponse("Here's the text of the Web page.")
 
+
+@csrf_exempt
+def getsimilaraudio(request):
+    curr_file = request.FILES['audio_file']
+    
+    return None
 
 #@csrf_exempt
 def upload(request):
