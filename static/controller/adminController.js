@@ -21,6 +21,8 @@
             console.log('inside admin controller');
             controller.audio_file = {};
             controller.file = null;
+            controller.similar_audios = [];
+
             var formdata = new FormData();
             this.print = function(){
                 console.log("HELLO!");
@@ -57,10 +59,19 @@
                 controller.audio_file.audio_file = controller.file;
                 audioService.uploadFile_Query(controller.audio_file, function(err, data){
                     if (err){
+                        console.log(err);
                         console.log('Error while uploading files_query');
                     }
                     else{
+                        console.log(data);
+//                        console.log(typeof(data[0].fields.audio_file));
+//                        data = JSON.parse(data[0].fields.audio_file);
+//                        controller.similar_audios = [];
+//                        controller.similar_audios.push(data);
+//                        $window.location.href = '/audio/';
+//                        $window.document.body.parentNode.innerHTML = data;
                         console.log('Successfully uploaded and queried file');
+//                        console.log(controller.similar_audios);
                     }
                 });
                 controller.audio_file = {};

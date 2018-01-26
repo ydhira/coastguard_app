@@ -3,8 +3,10 @@ from __future__ import unicode_literals
 from django.db import models
 from django.conf import settings
 from audiofield.fields import AudioField
+from audiofield.models import AudioFile
 #from django.contrib.auth.models import User
 import os.path
+
 
 # Create your models here.
 
@@ -17,7 +19,7 @@ class MyAudioFile(models.Model):
                         ext_whitelist=(".mp3", ".wav", ".ogg"),\
                         help_text=("Allowed type - .mp3, .wav, .ogg"))
 
-
+    ivector = models.TextField(null=True)
 
     # Add this method to your model
     def audio_file_player(self):

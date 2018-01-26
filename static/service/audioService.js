@@ -37,14 +37,6 @@
                     });
             };
             service.uploadFile_Query = function(audio , callback){
-                service.uploadFiles(audio, function(err, data){
-                    if (err){
-                        console.log('Error inside uploadFile_Query - uploadFile');
-                    }
-                    else{
-                        console.log('Successfully uploaded file');
-                    }
-                });
                 var formdata = new FormData();
                 for (var key in audio){
                      formdata.append(key, audio[key]);
