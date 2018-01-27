@@ -19,7 +19,8 @@
 <div ng-controller="adminController as adctrl">
 
     <!--{$ adctrl.similar_audios[0] $}-->
-    <audio controls="controls"> <source src="{{similar_audio}}" autoplay> </audio>
+    <!--{{audio_form.audio_file}}-->
+    <audio controls="controls"> <source src={{similar_audio}} > </audio>
 
 </div>
 </body>

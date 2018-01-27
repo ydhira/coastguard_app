@@ -21,16 +21,16 @@ class MyAudioFile(models.Model):
 
     ivector = models.TextField(null=True)
 
-    # Add this method to your model
-    def audio_file_player(self):
-        """audio player tag for admin"""
-        print 'self.audio_file: ', self.audio_file
-        if self.audio_file:
-            file_url = settings.MEDIA_URL + str(self.audio_file)
-            player_string = '<audio src="%s" controls>Your browser does not support the audio element.</audio>' % (file_url)
-            return player_string
+# Add this method to your model
+def audio_file_player(self):
+    """audio player tag for admin"""
+    print 'self.audio_file: ', self.audio_file
+    if self.audio_file:
+        file_url = settings.MEDIA_URL + str(self.audio_file)
+        player_string = '<audio src="%s" controls>Your browser does not support the audio element.</audio>' % (file_url)
+        return player_string
 
-    audio_file_player.allow_tags = True
-    audio_file_player.short_description = 'Audio file player'
+audio_file_player.allow_tags = True
+audio_file_player.short_description = 'Audio file player'
 
 
