@@ -63,13 +63,16 @@
                         console.log('Error while uploading files_query');
                     }
                     else{
-                        console.log(data);
+                       console.log(data);
+//                        console.log(JSON.parse(data));
 //                        console.log(typeof(data[0].fields.audio_file));
 //                        data = JSON.parse(data[0].fields.audio_file);
-//                        controller.similar_audios = [];
+                        controller.similar_audios = data;
 //                        controller.similar_audios.push(data);
-//                        $window.location.href = '/audio/';
+//                         $window.location.href = '/audio/';
 //                        $window.document.body.parentNode.innerHTML = data;
+//                        document.getElementById("content").innerHTML=data;
+
                         console.log('Successfully uploaded and queried file');
 //                        console.log(controller.similar_audios);
                     }

@@ -3,15 +3,19 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response, redirect
+from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import MyAudioFile
 import json
 import sys
-from math import sqrt
 from django.core import serializers
-import mimetypes
+from math import sqrt
+from audiofield.forms import *
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 
 ivector_dim = 64
 jsonDec = json.decoder.JSONDecoder()
@@ -26,9 +30,8 @@ def index(request):
 @csrf_exempt
 def fileupload(request):
     print 'inside views - file upload '
-    print type(request.FILES), request.FILES
-    print type(request.FILES['audio_file']), request.FILES['audio_file']
-    print request.FILES['audio_file'].size
+    print request
+    print request.POST
     i = None
     if request.FILES:
         i = MyAudioFile(audio_file=request.FILES['audio_file'])
@@ -37,6 +40,22 @@ def fileupload(request):
     i.ivector = json.dumps(curr_iv)
     i.save()
     return HttpResponse("Here's the text of the Web page.")
+
+
+@csrf_exempt
+def add_audio(request):
+    print 'inside add_audio'
+    template = 'upload.html'
+    form = CustomerAudioFileForm()
+    allaudios = MyAudioFile.objects.all()
+    form.fields['audio_file'].widget = CustomerAudioFileWidget()
+    data = {'audio_form': form,}
+    print data
+    # return render_to_response(template, data, context_instance=RequestContext(request))
+    return render_to_response(
+        'audio.html',
+        {'allaudios': allaudios, 'form': form}
+    )
 
 
 @csrf_exempt
@@ -63,19 +82,23 @@ def getsimilaraudio(request):
     res_audio = allaudios[min_ind]
     #i.save()
     print type(res_audio.audio_file)
-    #print res_audio.audio_file.read()
-    #print type(res_audio.audio_file.read())
     res_audio = allaudios[len(allaudios)-1]
     print res_audio.audio_file
-    data = {}
-    data['similar_audio'] = res_audio.audio_file.read()
-    response = render(request,'audio.html', data)
-    HttpResponseRedirect('audio.html')
-    return response
+    #data = {}
+    #data['similar_audio'] = res_audio.audio_file.read()
+    #response = render(request,'audio.html', data)
+    #HttpResponseRedirect('audio.html')
+    #return response
 
-    ####################
-    # data = serializers.serialize('json', [res_audio])
-    # return HttpResponse(data, content_type='audio')
+    if request.method == 'POST':
+        form = CustomerAudioFileForm(request.POST, request.FILES, instance=res_audio)
+        form.fields['audio_file'].widget = CustomerAudioFileWidget()
+
+    data = {'audio_form': form,}
+    print data
+    #return render(request, 'audio.html', data)
+    #return render_to_response('audio.html', res_audio.audio_file.file.read())
+    return HttpResponse(res_audio.audio_file.file.read(), content_type="audio/wav")
 
 #@csrf_exempt
 def upload(request):
