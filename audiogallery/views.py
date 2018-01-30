@@ -13,6 +13,7 @@ import sys
 from django.core import serializers
 from math import sqrt
 from audiofield.forms import *
+from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -46,16 +47,26 @@ def fileupload(request):
 def add_audio(request):
     print 'inside add_audio'
     template = 'upload.html'
-    form = CustomerAudioFileForm()
     allaudios = MyAudioFile.objects.all()
+    form = CustomerAudioFileForm()
+    form.audio_file = allaudios[0].audio_file
     form.fields['audio_file'].widget = CustomerAudioFileWidget()
     data = {'audio_form': form,}
-    print data
+    data_only_file = {'audio_file':  allaudios[0].audio_file }
+    print data_only_file
     # return render_to_response(template, data, context_instance=RequestContext(request))
-    return render_to_response(
-        'audio.html',
-        {'allaudios': allaudios, 'form': form}
-    )
+    # return render_to_response(
+    #     'common_audiofield.html',
+    #     {'allaudios': allaudios, 'form': form}
+    # )
+    data = json.dumps(list(data_only_file), cls=DjangoJSONEncoder)
+    object_name = allaudios[0].audio_file
+    filename = object_name.file.name.split('/')[-1]
+    response = HttpResponse(object_name.file, content_type='audio')
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+    return response
+    #return HttpResponse(data)
 
 
 @csrf_exempt
@@ -107,6 +118,10 @@ def upload(request):
 
 def audio(request):
     response = render(request, 'audio.html')
+    return response
+
+def common_audiofield(request):
+    response = render(request, 'common_audiofield.html')
     return response
 
 ######################################### HELPER FUNCTION #######################################

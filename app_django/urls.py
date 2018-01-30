@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^(?:index.html)?$', views.index, name='index'),
     url(r'^fileupload/$', views.fileupload, name='fileupload'),
     url(r'^getsimilaraudio/$', views.add_audio, name='add_audio'),
+    url(r'^common_audiofield/$', views.common_audiofield, name='common_audiofield'),
 ]
