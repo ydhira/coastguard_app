@@ -44,45 +44,27 @@ def fileupload(request):
 
 
 @csrf_exempt
-def add_audio(request):
-    print 'inside add_audio'
-    template = 'upload.html'
-    allaudios = MyAudioFile.objects.all()
-    form = CustomerAudioFileForm()
-    form.audio_file = allaudios[0].audio_file
-    form.fields['audio_file'].widget = CustomerAudioFileWidget()
-    data = {'audio_form': form,}
-    data_only_file = {'audio_file':  allaudios[0].audio_file }
-    print data_only_file
-    # return render_to_response(template, data, context_instance=RequestContext(request))
-    # return render_to_response(
-    #     'common_audiofield.html',
-    #     {'allaudios': allaudios, 'form': form}
-    # )
-    data = json.dumps(list(data_only_file), cls=DjangoJSONEncoder)
-    object_name = allaudios[0].audio_file
-    filename = object_name.file.name.split('/')[-1]
+def getaudiofromid(request, id):
+    print 'inside getaudiofromid'
+    audio_id = MyAudioFile.get(id=id)
+    object_name = audio_id.audio_file
+    filename = object_name.file.name.split("/")[-1]
     response = HttpResponse(object_name.file, content_type='audio')
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
-
     return response
-    #return HttpResponse(data)
 
 
 @csrf_exempt
-def getsimilaraudio(request):
+def uploadFile_Query(request):
     if request.FILES:
-        curr_file = request.FILES['audio_file']
         i = MyAudioFile(audio_file=request.FILES['audio_file'])
         curr_iv = calculate_ivector(i)
         i.ivector = json.dumps(curr_iv)
 
-    allaudios = MyAudioFile.objects.all()
-
+    allaudios = MyAudioFile.objects.all()  ##TODO: NOT a Good thing to do
     min_dist = sys.maxint
     min_ind = sys.maxint
     print 'All Audios: ', len(allaudios)
-    #print mimetypes.guess_type(allaudios[0])
     for audio_i in range(len(allaudios)):
         audio_iv = jsonDec.decode(allaudios[audio_i].ivector)
         dist_i = dist(audio_iv, curr_iv)
@@ -90,26 +72,10 @@ def getsimilaraudio(request):
             min_dist = dist_i
             min_ind = audio_i
 
-    res_audio = allaudios[min_ind]
+    res_audio_id = allaudios[min_ind].id
     #i.save()
-    print type(res_audio.audio_file)
-    res_audio = allaudios[len(allaudios)-1]
-    print res_audio.audio_file
-    #data = {}
-    #data['similar_audio'] = res_audio.audio_file.read()
-    #response = render(request,'audio.html', data)
-    #HttpResponseRedirect('audio.html')
-    #return response
 
-    if request.method == 'POST':
-        form = CustomerAudioFileForm(request.POST, request.FILES, instance=res_audio)
-        form.fields['audio_file'].widget = CustomerAudioFileWidget()
-
-    data = {'audio_form': form,}
-    print data
-    #return render(request, 'audio.html', data)
-    #return render_to_response('audio.html', res_audio.audio_file.file.read())
-    return HttpResponse(res_audio.audio_file.file.read(), content_type="audio/wav")
+    return HttpResponse(res_audio_id)
 
 #@csrf_exempt
 def upload(request):
@@ -140,3 +106,16 @@ def dist(audio_iv, curr_iv):
     return sqrt(dist)
     #np.linalg.norm(audio_iv - curr_iv)
 
+
+    # form = CustomerAudioFileForm()
+    # form.audio_file = allaudios[0].audio_file
+    # form.fields['audio_file'].widget = CustomerAudioFileWidget()
+    # data = {'audio_form': form,}
+    # data_only_file = {'audio_file':  allaudios[0].audio_file }
+    # print data_only_file
+    # # return render_to_response(template, data, context_instance=RequestContext(request))
+    # # return render_to_response(
+    # #     'common_audiofield.html',
+    # #     {'allaudios': allaudios, 'form': form}
+    # # )
+    # data = json.dumps(list(data_only_file), cls=DjangoJSONEncoder)

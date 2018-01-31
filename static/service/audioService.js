@@ -45,7 +45,7 @@
                 // ASK FOR SIMILAR FILE NAMES.
                  var request = {
                     method: 'POST',
-                    url: '/getsimilaraudio/',
+                    url: '/uploadFile_Query/',
                     data: formdata,
                     headers: {
                         'Content-Type': undefined

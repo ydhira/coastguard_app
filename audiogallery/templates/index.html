@@ -16,7 +16,10 @@
 
 </head>
 <body  ng-app="guardapp">
+
+
 <div ng-controller="adminController as adctrl">
+    {% block content %}
 
     <button ng-click="adctrl.print()">HELLO</button>
     <!-- #################### ONE FILE ONLY UPLOAD ##################################### -->
@@ -50,6 +53,7 @@
     <!--adctrl.similar_audios[0].audio_file-->
     <!--<audio controls="controls"> <source src="{$ adctrl.similar_audios[0] $}" autoplay> </audio>-->
 
+    {% endblock %}
 </div>
 </body>
 </html>

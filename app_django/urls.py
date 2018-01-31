@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^audio/$', views.audio, name='audio'),
     url(r'^(?:index.html)?$', views.index, name='index'),
     url(r'^fileupload/$', views.fileupload, name='fileupload'),
-    url(r'^getsimilaraudio/$', views.add_audio, name='add_audio'),
+    url(r'^getaudiofromid/(?P<id>\d+)/$', views.getaudiofromid, name='getaudiofromid'),
     url(r'^common_audiofield/$', views.common_audiofield, name='common_audiofield'),
+    url(r'^uploadFile_Query/$', views.uploadFile_Query, name='uploadFile_Query'),
 ]
